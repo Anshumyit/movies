@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class Constants{
   static double font5Size=5;
   static double font8Size=8;
@@ -10,5 +12,14 @@ class Constants{
   static double font25Size = 25;
   static double font30Size = 30;
   static double font35Size = 35;
+
+
+
+  //  your custom font family
+  static String fontFamily = 'Roboto';
+
+
+  //  FontWeight.bold
+ static FontWeight fontWeight = FontWeight.w500;
 
 }

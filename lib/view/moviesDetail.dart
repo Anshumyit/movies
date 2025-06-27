@@ -1,10 +1,13 @@
+import 'package:bhojapurimovie/constants/vertical_horizantal_space.dart';
 import 'package:bhojapurimovie/model/movies_details_model.dart';
 import 'package:bhojapurimovie/viewcontroller/home_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../constants/color.dart';
+import '../constants/fonstSize.dart';
 import '../Utility/network.dart';
+import '../constants/stylesfonts.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final int MovieId;
@@ -16,6 +19,8 @@ class MovieDetailScreen extends StatefulWidget {
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
   late Future<moviesdetails_model?> movieFuture;
+
+
 
   String formathours(int runtime) {
     int hours = runtime ~/ 60;
@@ -83,7 +88,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                     child: Icon(Icons.close, color: Colors.white),
                                   ),
                                 ),
-                                SizedBox(width: 5),
+                                UtilityWidget.horizontalsSpace(5),
                                 CircleAvatar(
                                   backgroundColor: Colors.black54,
                                   child: Icon(Icons.cast, color: Colors.white),
@@ -95,6 +100,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             top: 100,
                             bottom: 100,
                             left: 150,
+                            // top: MediaQuery.of(context).size.height * 0.2,
+                            // bottom: MediaQuery.of(context).size.height * 0.2,
+                            // left: MediaQuery.of(context).size.width * 0.5,
                             child: Icon(
                               Icons.play_circle_outline,
                               color: Colors.white,size: 70,
@@ -110,7 +118,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             Row(
                               children: [
                                 Text(
-                                  movie?.title ?? "",
+                                  movie.title ?? "",
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
@@ -131,12 +139,12 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                SizedBox(width: 5),
+                                UtilityWidget.horizontalsSpace(5),
                                 Text(
                                   formathours(movie.runtime ?? 0),
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                SizedBox(width: 5),
+                                UtilityWidget.horizontalsSpace(5),
                                 Text("HD", style: TextStyle(color: Colors.white)),
                               ],
                             ),
@@ -173,7 +181,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 15,),
+                      UtilityWidget.verticalSpace(15),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey.shade700,
@@ -204,9 +212,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 15,),
+                      UtilityWidget.verticalSpace(15),
                       Text(generesText,style: TextStyle(fontSize: 17,color: Colors.white),),
-                      SizedBox(height: 10),
+                      UtilityWidget.verticalSpace(15),
                       Text(movie.overview ?? "",maxLines:5,overflow:TextOverflow.ellipsis,style: TextStyle(color: Colors.white,fontSize: 16),),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -214,21 +222,22 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           Column(
                             children: [
                               Icon(Icons.add,color: Colors.white,),
-                              Text('My List',style: TextStyle(color: Colors.white),)
+                              Text('My List',style: CustomTextStyle.customStyle(Constants.fontFamily, CustomColors.Whitecolor, Constants.font10Size, Constants.fontWeight),)
                             ],
                           ),
-                          SizedBox(width: 12,),
+
+                          UtilityWidget.horizontalsSpace(12),
                           Column(
                             children: [
                               Icon(Icons.star_rate_outlined,color: Colors.white,),
-                              Text('Rate',style: TextStyle(color: Colors.white),)
+                              Text('Rate',style: CustomTextStyle.customStyle(Constants.fontFamily, CustomColors.Whitecolor, Constants.font10Size, Constants.fontWeight),)
                             ],
                           ),
-                          SizedBox(width: 12,),
+                          UtilityWidget.horizontalsSpace(12),
                           Column(
                             children: [
                               Icon(Icons.share,color: Colors.white,),
-                              Text('share',style: TextStyle(color: Colors.white),)
+                              Text('share',style: CustomTextStyle.customStyle(Constants.fontFamily, CustomColors.Whitecolor, Constants.font10Size, Constants.fontWeight),)
                             ],
                           )
                         ],
