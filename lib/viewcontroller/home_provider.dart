@@ -12,7 +12,9 @@ import 'package:bhojapurimovie/model/top_rating_models.dart'
     as top_rating_models;
 import 'package:bhojapurimovie/model/movies_details_model.dart'
     as moviesdetails_model;
-import 'package:bhojapurimovie/view/moviesDetail.dart';
+import 'package:bhojapurimovie/model/recommandtionsModel.dart'
+as RecommendationModel;
+
 import 'package:flutter/cupertino.dart';
 
 class home_provider with ChangeNotifier {
@@ -135,6 +137,7 @@ class home_provider with ChangeNotifier {
   // Top Rating show
 
   List<top_rating_models.Results>? Top_Rating = [];
+
   Future<List<top_rating_models.Results>?> TopRatingMovieshow() async {
     try {
       final response = await NetworkApiService().getGetApiResponse(
@@ -151,6 +154,7 @@ class home_provider with ChangeNotifier {
     } catch (e) {
       print('Error fetching movie data: $e');
     }
+    return Top_Rating ;
   }
 
   // movie details screen
@@ -174,4 +178,28 @@ class home_provider with ChangeNotifier {
       print('Error fetching movie data: $e');
     }
   }
+
+
+   RecommendationModel.RecommendationModel ? movieRecommandation;
+
+  Future<RecommendationModel.RecommendationModel?> MovieRecommandation(
+      int movieId,
+      ) async {
+    try {
+      final response = await NetworkApiService().getGetApiResponse(movies.movieRecommandationApi(movieId));
+      if (response.toString().isNotEmpty) {
+        final ressponseData = RecommendationModel.RecommendationModel.fromJson(
+          response,
+        );
+        movieRecommandation = ressponseData;
+        notifyListeners();
+        return movieRecommandation;
+      }
+    } catch (e) {
+      print('Error fetching movie data: $e');
+    }
+    return movieRecommandation;
+  }
+
+
 }

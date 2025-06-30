@@ -24,4 +24,9 @@ class movies{
     return '$baseUrls/movie/$movieID${appUri.key}';
   }
 
+
+  static String movieRecommandationApi(int movieId){
+    return '$baseUrls/movie/$movieId/recommendations${appUri.key}';
+  }
+
 }
