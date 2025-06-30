@@ -193,7 +193,7 @@ class home_provider with ChangeNotifier {
         );
         movieRecommandation = ressponseData;
         notifyListeners();
-        return movieRecommandation;
+        // return movieRecommandation;
       }
     } catch (e) {
       print('Error fetching movie data: $e');

@@ -244,45 +244,45 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         ],
                       ),
                       UtilityWidget.verticalSpace(20),
-                      MovieTypeWidget(
-                        future: Provider.of<home_provider>(context, listen: false).MovieRecommandation(widget.MovieId),
-                        movieType: "More like this",
-                        isReverse: true,
-                      )
+                      // MovieTypeWidget(
+                      //   future: Provider.of<home_provider>(context, listen: false).MovieRecommandation(widget.MovieId),
+                      //   movieType: "More like this",
+                      //   isReverse: true,
+                      // )
 
-                      // FutureBuilder(future: Provider.of<home_provider>(context,listen: false).MovieRecommandation(widget.MovieId), builder: (context,snapshot){
-                      //   if(snapshot.connectionState==ConnectionState.waiting){
-                      //     return Center(child: CircularProgressIndicator(),);
-                      //   } else if(snapshot.hasError){
-                      //     return Center(child: Text('Error: ${snapshot.error}'));
-                      //   } else if (snapshot.hasData){
-                      //     final movieList = snapshot.data!;
-                      //       return movieList.results!.isEmpty? SizedBox(): Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: [
-                      //           Text('More like this',style: TextStyle(color: Colors.white),),
-                      //           UtilityWidget.verticalSpace(20),
-                      //           SizedBox(
-                      //             height:200,
-                      //             child: ListView.builder(
-                      //               shrinkWrap: true,
-                      //               scrollDirection: Axis.horizontal,
-                      //               itemCount: movieList.results?.length,
-                      //                 itemBuilder: (context,index){
-                      //                 return CachedNetworkImage(imageUrl: "${movies.imagesUrl}${movieList.results?[index].posterPath}",height: 200,width: 150,fit: BoxFit.cover,);
-                      //                 })
-                      //           )
-                      //         ],
-                      //       );
-                      //
-                      //   } else{
-                      //     return const Center(child: Text('Problem to fetch data',style: TextStyle(color: Colors.white),));
-                      //   }
-                      // })
+                      FutureBuilder(future: Provider.of<home_provider>(context,listen: false).MovieRecommandation(widget.MovieId), builder: (context,snapshot){
+                        if(snapshot.connectionState==ConnectionState.waiting){
+                          return Center(child: CircularProgressIndicator(),);
+                        } else if(snapshot.hasError){
+                          return Center(child: Text('Error: ${snapshot.error}'));
+                        } else if (snapshot.hasData){
+                          final movieList = snapshot.data!;
+                            return movieList.results!.isEmpty? SizedBox(): Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('More like this',style: TextStyle(color: Colors.white),),
+                                UtilityWidget.verticalSpace(20),
+                                SizedBox(
+                                  height:200,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: movieList.results?.length,
+                                      itemBuilder: (context,index){
+                                      return CachedNetworkImage(imageUrl: "${movies.imagesUrl}${movieList.results?[index].posterPath}",height: 200,width: 150,fit: BoxFit.cover,);
+                                      })
+                                )
+                              ],
+                            );
+
+                        } else{
+                          return const Center(child: Text('Problem to fetch data',style: TextStyle(color: Colors.white),));
+                        }
+                      })
 
                     ],
                   ),
-                );
+                );gg
               },
             );
           }
