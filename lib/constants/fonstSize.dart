@@ -5,6 +5,7 @@ class Constants{
   static double font8Size=8;
   static double font10Size = 10;
   static double font16Size = 16;
+  static double font14Size = 14;
   static double font18Size = 18;
   static double font20Size = 20;
   static double font22Size = 22;
@@ -17,6 +18,7 @@ class Constants{
 
   //  your custom font family
   static String fontFamily = 'Roboto';
+  static String  fontweight= "FontWeight";
 
 
   //  FontWeight.bold

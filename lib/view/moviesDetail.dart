@@ -20,12 +20,9 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
-
   late Future<moviesdetails_model?> movieFuture;
   late Future<RecommendationModel?> movieRecommandation;
   // RecommendationModel? movieRecommandation; // <-- a variable
-
-
 
   String formathours(int runtime) {
     int hours = runtime ~/ 60;
@@ -44,9 +41,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
       listen: false,
     ).MovieDetailScreenshow(widget.MovieId);
 
-    movieRecommandation = Provider.of<home_provider>(context, listen: false)
-        .MovieRecommandation(widget.MovieId);
-
+    movieRecommandation = Provider.of<home_provider>(
+      context,
+      listen: false,
+    ).MovieRecommandation(widget.MovieId);
   }
 
   @override
@@ -97,14 +95,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                     backgroundColor: Colors.black54,
                                     child: Icon(
                                       Icons.close,
-                                      color: Colors.white,
+                                       color:  CustomColors.Whitecolor
                                     ),
                                   ),
                                 ),
                                 UtilityWidget.horizontalsSpace(5),
                                 CircleAvatar(
                                   backgroundColor: Colors.black54,
-                                  child: Icon(Icons.cast, color: Colors.white),
+                                  child: Icon(Icons.cast, color: CustomColors.Whitecolor),
                                 ),
                               ],
                             ),
@@ -118,7 +116,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             // left: MediaQuery.of(context).size.width * 0.5,
                             child: Icon(
                               Icons.play_circle_outline,
-                              color: Colors.white,
+                              color: CustomColors.Whitecolor,
                               size: 70,
                             ),
                           ),
@@ -140,7 +138,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                   ),
                                 ),
                                 Spacer(),
-                                Icon(Icons.movie, color: Colors.white),
+                                Icon(Icons.movie, color: CustomColors.Whitecolor),
                               ],
                             ),
 
@@ -148,20 +146,17 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                               children: [
                                 Text(
                                   movie.releaseDate.toString(),
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                  ),
+                                  style: CustomTextStyle.customFont(Constants.font14Size, CustomColors.Whitecolor),
                                 ),
                                 UtilityWidget.horizontalsSpace(5),
                                 Text(
                                   formathours(movie.runtime ?? 0),
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color:  CustomColors.Whitecolor,),
                                 ),
                                 UtilityWidget.horizontalsSpace(5),
                                 Text(
                                   "HD",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: CustomColors.Whitecolor,),
                                 ),
                               ],
                             ),
@@ -183,8 +178,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             children: [
                               Icon(
                                 Icons.play_arrow,
-                                size: 38,
-                                color: Colors.black,
+                                size: Constants.font35Size,
+                                color: CustomColors.Blackcolor,
                               ),
                               Text(
                                 'Play',
@@ -224,6 +219,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                 ),
+                                // style: CustomTextStyle.customStyle( Constants.fontWeight, CustomColors.black12, size, fontWeight),
                               ),
                             ],
                           ),
@@ -232,21 +228,25 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       UtilityWidget.verticalSpace(15),
                       Text(
                         generesText,
-                        style: TextStyle(fontSize: 17, color: Colors.white),
+                        // style: TextStyle(fontSize: 17, color: Colors.white),
+                        style: CustomTextStyle.customFont(Constants.font18Size, CustomColors.Whitecolor),
                       ),
                       UtilityWidget.verticalSpace(15),
                       Text(
                         movie.overview ?? "",
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                        style: CustomTextStyle.customFont(
+                          Constants.font16Size,
+                          CustomColors.Whitecolor,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Column(
                             children: [
-                              Icon(Icons.add, color: Colors.white),
+                              Icon(Icons.add, color: CustomColors.Whitecolor),
                               Text(
                                 'My List',
                                 style: CustomTextStyle.customStyle(
@@ -264,7 +264,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             children: [
                               Icon(
                                 Icons.star_rate_outlined,
-                                color: Colors.white,
+                                color: CustomColors.Whitecolor,
                               ),
                               Text(
                                 'Rate',
@@ -329,9 +329,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                         scrollDirection: Axis.horizontal,
                                         itemCount: movieList.results?.length,
                                         itemBuilder: (context, index) {
-                                         final postmeter=movieList.results?[index].posterPath;
+                                          final postmeter =
+                                              movieList
+                                                  .results?[index]
+                                                  .posterPath;
                                           return Padding(
-                                            padding: const EdgeInsets.only(right: 10),
+                                            padding: const EdgeInsets.only(
+                                              right: 10,
+                                            ),
                                             child: CachedNetworkImage(
                                               imageUrl:
                                                   "${movies.imagesUrl}${postmeter}",
@@ -346,10 +351,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                   ],
                                 );
                           } else {
-                            return const Center(
+                            return Center(
                               child: Text(
                                 'Problem to fetch data',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color:CustomColors.Whitecolor),
                               ),
                             );
                           }

@@ -12,7 +12,7 @@ class CustomTextStyle {
   }
 
 
-  TextStyle customFont(double size, {Color color = Colors.black, FontWeight weight = FontWeight.normal}) {
+  static TextStyle customFont(double size, Color color,  {Color colors = Colors.black, FontWeight weight = FontWeight.normal}) {
     return TextStyle(
       fontSize: size,
       color: color,
