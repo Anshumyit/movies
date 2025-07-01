@@ -9,6 +9,7 @@ import '../constants/color.dart';
 import '../constants/fonstSize.dart';
 import '../Utility/network.dart';
 import '../constants/stylesfonts.dart';
+import '../model/recommandtionsModel.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final int MovieId;
@@ -19,7 +20,10 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
+
   late Future<moviesdetails_model?> movieFuture;
+  late Future<RecommendationModel?> movieRecommandation;
+  // RecommendationModel? movieRecommandation; // <-- a variable
 
 
 
@@ -39,6 +43,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
       context,
       listen: false,
     ).MovieDetailScreenshow(widget.MovieId);
+
+    movieRecommandation = Provider.of<home_provider>(context, listen: false)
+        .MovieRecommandation(widget.MovieId);
+
   }
 
   @override
@@ -55,7 +63,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             return Center(child: Text('Error : ${snapshot.error}'));
           } else if (snapshot.hasData) {
             final movie = snapshot.data!;
-            String generesText=movie.genres?.map((value)=>value.name ).join(',') ?? "";
+            String generesText =
+                movie.genres?.map((value) => value.name).join(',') ?? "";
             return Consumer<home_provider>(
               builder: (context, value, child) {
                 return SingleChildScrollView(
@@ -86,7 +95,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                   },
                                   child: CircleAvatar(
                                     backgroundColor: Colors.black54,
-                                    child: Icon(Icons.close, color: Colors.white),
+                                    child: Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 UtilityWidget.horizontalsSpace(5),
@@ -106,7 +118,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                             // left: MediaQuery.of(context).size.width * 0.5,
                             child: Icon(
                               Icons.play_circle_outline,
-                              color: Colors.white,size: 70,
+                              color: Colors.white,
+                              size: 70,
                             ),
                           ),
                         ],
@@ -130,7 +143,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                 Icon(Icons.movie, color: Colors.white),
                               ],
                             ),
-                  
+
                             Row(
                               children: [
                                 Text(
@@ -146,7 +159,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 UtilityWidget.horizontalsSpace(5),
-                                Text("HD", style: TextStyle(color: Colors.white)),
+                                Text(
+                                  "HD",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ],
                             ),
                           ],
@@ -214,33 +230,68 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         ),
                       ),
                       UtilityWidget.verticalSpace(15),
-                      Text(generesText,style: TextStyle(fontSize: 17,color: Colors.white),),
+                      Text(
+                        generesText,
+                        style: TextStyle(fontSize: 17, color: Colors.white),
+                      ),
                       UtilityWidget.verticalSpace(15),
-                      Text(movie.overview ?? "",maxLines:5,overflow:TextOverflow.ellipsis,style: TextStyle(color: Colors.white,fontSize: 16),),
+                      Text(
+                        movie.overview ?? "",
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Column(
                             children: [
-                              Icon(Icons.add,color: Colors.white,),
-                              Text('My List',style: CustomTextStyle.customStyle(Constants.fontFamily, CustomColors.Whitecolor, Constants.font10Size, Constants.fontWeight),)
+                              Icon(Icons.add, color: Colors.white),
+                              Text(
+                                'My List',
+                                style: CustomTextStyle.customStyle(
+                                  Constants.fontFamily,
+                                  CustomColors.Whitecolor,
+                                  Constants.font10Size,
+                                  Constants.fontWeight,
+                                ),
+                              ),
                             ],
                           ),
 
                           UtilityWidget.horizontalsSpace(12),
                           Column(
                             children: [
-                              Icon(Icons.star_rate_outlined,color: Colors.white,),
-                              Text('Rate',style: CustomTextStyle.customStyle(Constants.fontFamily, CustomColors.Whitecolor, Constants.font10Size, Constants.fontWeight),)
+                              Icon(
+                                Icons.star_rate_outlined,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                'Rate',
+                                style: CustomTextStyle.customStyle(
+                                  Constants.fontFamily,
+                                  CustomColors.Whitecolor,
+                                  Constants.font10Size,
+                                  Constants.fontWeight,
+                                ),
+                              ),
                             ],
                           ),
                           UtilityWidget.horizontalsSpace(12),
                           Column(
                             children: [
-                              Icon(Icons.share,color: Colors.white,),
-                              Text('share',style: CustomTextStyle.customStyle(Constants.fontFamily, CustomColors.Whitecolor, Constants.font10Size, Constants.fontWeight),)
+                              Icon(Icons.share, color: Colors.white),
+                              Text(
+                                'share',
+                                style: CustomTextStyle.customStyle(
+                                  Constants.fontFamily,
+                                  CustomColors.Whitecolor,
+                                  Constants.font10Size,
+                                  Constants.fontWeight,
+                                ),
+                              ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                       UtilityWidget.verticalSpace(20),
@@ -249,40 +300,64 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       //   movieType: "More like this",
                       //   isReverse: true,
                       // )
-
-                      FutureBuilder(future: Provider.of<home_provider>(context,listen: false).MovieRecommandation(widget.MovieId), builder: (context,snapshot){
-                        if(snapshot.connectionState==ConnectionState.waiting){
-                          return Center(child: CircularProgressIndicator(),);
-                        } else if(snapshot.hasError){
-                          return Center(child: Text('Error: ${snapshot.error}'));
-                        } else if (snapshot.hasData){
-                          final movieList = snapshot.data!;
-                            return movieList.results!.isEmpty? SizedBox(): Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('More like this',style: TextStyle(color: Colors.white),),
-                                UtilityWidget.verticalSpace(20),
-                                SizedBox(
-                                  height:200,
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: movieList.results?.length,
-                                      itemBuilder: (context,index){
-                                      return CachedNetworkImage(imageUrl: "${movies.imagesUrl}${movieList.results?[index].posterPath}",height: 200,width: 150,fit: BoxFit.cover,);
-                                      })
-                                )
-                              ],
+                      FutureBuilder<RecommendationModel?>(
+                        future: movieRecommandation,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
                             );
-
-                        } else{
-                          return const Center(child: Text('Problem to fetch data',style: TextStyle(color: Colors.white),));
-                        }
-                      })
-
+                          } else if (snapshot.hasData) {
+                            final movieList = snapshot.data!;
+                            return movieList.results!.isEmpty
+                                ? SizedBox()
+                                : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'More like this',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    UtilityWidget.verticalSpace(20),
+                                    SizedBox(
+                                      height: 200,
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: movieList.results?.length,
+                                        itemBuilder: (context, index) {
+                                         final postmeter=movieList.results?[index].posterPath;
+                                          return Padding(
+                                            padding: const EdgeInsets.only(right: 10),
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  "${movies.imagesUrl}${postmeter}",
+                                              height: 200,
+                                              width: 150,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                );
+                          } else {
+                            return const Center(
+                              child: Text(
+                                'Problem to fetch data',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ],
                   ),
-                );gg
+                );
               },
             );
           }
