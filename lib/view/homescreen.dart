@@ -6,6 +6,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'SearchScreen.dart';
+
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
 
@@ -33,7 +35,9 @@ class _HomescreenState extends State<Homescreen> {
                   ),
                   Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Searchscreen()));
+                    },
                     icon: Icon(Icons.search, size: 27),
                     color: Colors.white,
                   ),

@@ -5,12 +5,8 @@ import 'package:bhojapurimovie/Utility/network.dart';
 //  const key ="?api_key=129288ae14b1dd15268a04560a6cf497";
 
 class movies{
-
-  // int? movieID;
-
   static const baseUrls=appUri.baseUrl;
-
-   static var movieurl= '${baseUrls}/movie/now_playing${appUri.key}';
+  static var movieurl= '${baseUrls}/movie/now_playing${appUri.key}';
    static const upcomingmovie='${baseUrls}/movie/upcoming${appUri.key}';
    static const trendingmovies='${baseUrls}/trending/movie/day${appUri.key}';
    static const topmovies='${baseUrls}/movie/top_rated${appUri.key}';
@@ -27,6 +23,10 @@ class movies{
 
   static String movieRecommandationApi(int movieId){
     return '$baseUrls/movie/$movieId/recommendations${appUri.key}';
+  }
+
+  static String MovieSearchApi(String query){
+    return '${baseUrls}/search/movie${appUri.key}&query=$query';
   }
 
 }

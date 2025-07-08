@@ -14,8 +14,11 @@ import 'package:bhojapurimovie/model/movies_details_model.dart'
     as moviesdetails_model;
 import 'package:bhojapurimovie/model/recommandtionsModel.dart'
 as RecommendationModel;
+import 'package:bhojapurimovie/model/movie_search.dart'
+as MovieSearchModel;
 
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 
 class home_provider with ChangeNotifier {
   List<movie_models_bhojapuri.Results>? movieshow = [];
@@ -200,6 +203,51 @@ class home_provider with ChangeNotifier {
     }
     return null;
   }
+
+
+
+
+  // Search Movies
+  // MovieSearchModel.MovieSearchModel ? MovieSearchData;
+  // Future<MovieSearchModel.MovieSearchModel?> MovieSearch(
+  //     String query ,
+  //     ) async {
+  //   try {
+  //     final response = await NetworkApiService().getGetApiResponse(movies.MovieSearchApi(query));
+  //     if (response.toString().isNotEmpty) {
+  //       final ressponseData = MovieSearchModel.MovieSearchModel.fromJson(
+  //         response,
+  //       );
+  //       MovieSearchData = ressponseData;
+  //       notifyListeners();
+  //       return MovieSearchData;
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching movie data: $e');
+  //   }
+  //   return null;
+  // }
+
+  Future<MovieSearchModel.MovieSearchModel?> getMovieSearch(String query) async {
+    final url =movies.MovieSearchApi(query);
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjkyODhhZTE0YjFkZDE1MjY4YTA0NTYwYTZjZjQ5NyIsIm5iZiI6MTc0OTk4MjMzNC42NDgsInN1YiI6IjY4NGU5YzdlMWQ2YzRhNDc0ZWJiNTA0MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Mjp1e5itxcTM3L3ED_2Q3LiEtTD3hp5gEpQ7CzcODcQ" // Replace with real token
+    },);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return MovieSearchModel.MovieSearchModel.fromJson(data);
+    
+    } else {
+      print('Error: ${response.statusCode}');
+    }
+    return null;
+  }
+
+
 
 
 }
