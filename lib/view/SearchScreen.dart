@@ -18,7 +18,7 @@ class Searchscreen extends StatefulWidget {
 class _SearchscreenState extends State<Searchscreen> {
   TextEditingController searchDataController = TextEditingController();
   MovieSearchModel? movieSearchModel;
-   home_provider? homeProvider;
+  home_provider? homeProvider;
   // void search(String query) {
   //   homeProvider?.getMovieSearch(query).then((movieSearchData) {
   //     setState(() {
@@ -27,7 +27,10 @@ class _SearchscreenState extends State<Searchscreen> {
   //   });
   // }
   void search(String query) async {
-    final result = await Provider.of<home_provider>(context, listen: false).getMovieSearch(query);
+    final result = await Provider.of<home_provider>(
+      context,
+      listen: false,
+    ).getMovieSearch(query);
     setState(() {
       movieSearchModel = result;
     });
@@ -116,7 +119,15 @@ class _SearchscreenState extends State<Searchscreen> {
                                 ),
                               ),
                             ),
-                            Positioned(child: Icon(Icons.play_circle_fill_outlined,color: Colors.white,size: 27,))
+                            Positioned(
+                              right: 10,
+                              top:35,
+                              child: Icon(
+                                Icons.play_circle_fill_outlined,
+                                color: Colors.white,
+                                size: 27,
+                              ),
+                            ),
                           ],
                         );
                   },
